@@ -6,7 +6,6 @@ omit =
     audinota/tests/*
     audinota/vendor/*
     audinota/_version.py
-    audinota/cli.py
     audinota/paths.py
 
 [report]
