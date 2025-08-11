@@ -3,7 +3,6 @@
 import typing as T
 import io
 
-import librosa
 import soundfile
 
 
@@ -21,9 +20,9 @@ def segment_audio(
     """
     # Reset stream position to beginning
     audio.seek(0)
-
-    # Load audio data using librosa
-    y, sr = librosa.load(audio, sr=None)
+    
+    # Read audio data using soundfile directly (avoids audioread deprecation warnings)
+    y, sr = soundfile.read(audio)
 
     # Calculate segment length in samples
     total_samples = len(y)

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from audinota.utils import segment_audio
-
 import io
+import warnings
 
+# Suppress audioread deprecation warnings for Python 3.11+
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="audioread")
+
+from audinota.utils import segment_audio
 from audinota.tests.audio_files import AudioFileEnum
 
 
