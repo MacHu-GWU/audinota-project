@@ -47,6 +47,7 @@ dependencies = [
     "librosa>=0.11.0,<1.0.0", # Audio processing
     "faster-whisper>=1.2.0,<2.0.0", # Audio to Text
     "mpire>=2.10.2,<3.0.0", # Multiprocessing for Python
+    "fire>=0.7.0,<1.0.0", # Command line interface
 ]
 
 # ------------------------------------------------------------------------------
