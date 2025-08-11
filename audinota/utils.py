@@ -2,11 +2,12 @@
 
 import typing as T
 import io
+import math
 
 import soundfile
 
 
-def segment_audio(
+def segment_audio_by_count(
     audio: T.BinaryIO,
     n_seg: int,
 ) -> list[bytes]:
@@ -20,7 +21,7 @@ def segment_audio(
     """
     # Reset stream position to beginning
     audio.seek(0)
-    
+
     # Read audio data using soundfile directly (avoids audioread deprecation warnings)
     y, sr = soundfile.read(audio)
 
@@ -51,3 +52,33 @@ def segment_audio(
         segments.append(segment_bytes.getvalue())
 
     return segments
+
+
+def get_audio_duration(audio: T.BinaryIO) -> float:
+    """
+    Get audio duration in seconds without loading the entire file.
+
+    :param audio: Audio data as BytesIO
+    :return: Duration in seconds
+    """
+    audio.seek(0)  # Reset to beginning
+    info = soundfile.info(audio)
+    audio.seek(0)  # Reset again for future use
+    return info.duration
+
+
+def segment_audio_by_duration(
+    audio: T.BinaryIO,
+    duration: int,
+) -> list[bytes]:
+    """
+    Segment audio data into parts of specified duration.
+
+    :param audio: Audio data as a binary stream. Usually from ``io.BytesIO(Path("...").read_bytes())``.
+    :param duration: Duration of each segment in seconds.
+
+    :return: List of audio segments as bytes.
+    """
+    total_duration = get_audio_duration(audio)
+    n_seg = math.ceil(total_duration / duration)
+    return segment_audio_by_count(audio, n_seg)

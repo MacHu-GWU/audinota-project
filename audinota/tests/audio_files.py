@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import typing as T
+import io
 import dataclasses
 import urllib.request
 
@@ -44,15 +45,17 @@ class AudioFile:
             self.download()
             return self.path.read_bytes()
 
+    @property
+    def audio(self):
+        return io.BytesIO(self.read())
+
 
 class AudioFileEnum:
-    a01_ai_karen_hao_agi_openai_ai_10min = AudioFile(
-        name="01-AI-Karen-Hao-AGI-OpenAI-AI-10min.mp3"
-    )
+    # fmt: off
+    a01_ai_karen_hao_agi_openai_ai_10min = AudioFile(name="01-AI-Karen-Hao-AGI-OpenAI-AI-10min.mp3")
     a02_stablecoin_15min = AudioFile(name="02-Stablecoin-15min.mp3")
-    a03_luo_ji_si_wei_kai_hui_60min = AudioFile(
-        name="03-Luo-Ji-Si-Wei-Kai-Hui-60min.mp3"
-    )
+    a03_luo_ji_si_wei_kai_hui_60min = AudioFile(name="03-Luo-Ji-Si-Wei-Kai-Hui-60min.mp3")
+    # fmt: on
 
     @classmethod
     def iter(cls) -> T.Iterator[AudioFile]:
